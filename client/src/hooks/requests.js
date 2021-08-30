@@ -4,9 +4,9 @@ const PORT = ':8000'
 const BASE_URL = PROTOCOL + URL + PORT
 
 async function httpGetPlanets() {
-  const response = await fetch(BASE_URL + '/planets');
-  return await response.json();
-  // Load planets and return as JSON.
+  const response = await fetch(`${BASE_URL}/planets`)
+  return response.json()
+
 }
 
 async function httpGetLaunches() {
