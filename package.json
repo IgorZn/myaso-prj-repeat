@@ -1,0 +1,25 @@
+{
+  "name": "nsa-prj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test --prefix server & npm run test --prefix client",
+    "server-watch-win": "npm run watch-windows --prefix server",
+    "client": "npm start --prefix client",
+    "watch-win": "cmd.exe /c \"npm run server-watch-win & npm run client\"",
+    "i-server": "npm i --prefix server",
+    "i-client": "npm i --prefix client",
+    "install-project": "npm run i-server && npm run i-client"
+  },
+  "repository": {
+    "url": "git+https://github.com/IgorZn/myaso-prj-repeat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgorZn/myaso-prj-repeat/issues"
+  },
+  "homepage": "https://github.com/IgorZn/myaso-prj-repeat#readme"
+}
