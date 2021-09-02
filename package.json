@@ -10,6 +10,7 @@
     "watch-win": "cmd.exe /c \"npm run server-watch-win & npm run client\"",
     "i-server": "npm i --prefix server",
     "i-client": "npm i --prefix client",
+    "deploy-win": "npm run build-win --prefix client && npm run start-win --prefix server",
     "install-project": "npm run i-server && npm run i-client"
   },
   "repository": {

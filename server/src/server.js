@@ -15,5 +15,3 @@ async function startServer() {
 }
 
 startServer();
-
-console.log(PORT)
