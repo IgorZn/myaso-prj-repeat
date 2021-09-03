@@ -7,7 +7,6 @@
     "test": "npm run test --prefix server & npm run test --prefix client",
     "server-watch-win": "npm run watch-windows --prefix server",
     "client": "npm start --prefix client",
-    "watch-win": "cmd.exe /c \"npm run server-watch-win & npm run client\"",
     "i-server": "npm i --prefix server",
     "i-client": "npm i --prefix client",
     "deploy-win": "npm run build-win --prefix client && npm run start-win --prefix server",
