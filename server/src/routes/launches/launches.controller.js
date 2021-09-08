@@ -1,8 +1,9 @@
 const { getAllLaunches, addNewLaunch } = require('../../models/launches.model')
 
 function httpGetAllLaunches(req, res){
-    console.log(req.body['test'])
-    return res.status(200).json(getAllLaunches())
+    return res.status(200).json(getAllLaunches().sort((a, b) => {
+        return a.flightNumber - b.flightNumber
+    }))
 };
 
 function httpAddNewLaunch(req, res) {

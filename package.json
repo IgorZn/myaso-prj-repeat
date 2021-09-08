@@ -9,7 +9,8 @@
     "client": "npm start --prefix client",
     "i-server": "npm i --prefix server",
     "i-client": "npm i --prefix client",
-    "deploy-win": "npm run build-win --prefix client && npm run start-win --prefix server",
+    "rm-pub": "rmdir /S /Q .\\server\\public",
+    "deploy-win": "npm run rm-pub && npm run build-win --prefix client && npm run start-win --prefix server",
     "install-project": "npm run i-server && npm run i-client"
   },
   "repository": {

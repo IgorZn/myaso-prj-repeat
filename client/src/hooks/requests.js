@@ -12,7 +12,7 @@ async function httpGetPlanets() {
 async function httpGetLaunches() {
   const response = await fetch(`${BASE_URL}/launches`);
   const fetchedLaunches = response.json();
-  return fetchedLaunches.sort()
+  return fetchedLaunches
 }
 
 async function httpSubmitLaunch(launch) {
