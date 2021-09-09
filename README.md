@@ -1,4 +1,5 @@
-![logo](logo.png)
+![alt text](https://github.com/IgorZn/myaso-prj-repeat/blob/master/logo.PNG?raw=true)
+
 # myaso-prj-repeat
 
 
