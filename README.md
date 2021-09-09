@@ -1,4 +1,4 @@
-![Screenshot](logo.png)
+![logo](logo.png)
 # myaso-prj-repeat
 
 
