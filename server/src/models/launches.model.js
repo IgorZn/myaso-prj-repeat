@@ -15,12 +15,29 @@ const launch = {
 
 launches.set(launch.flightNumber, launch);
 
+function existLaunchWithId(id) {
+    // id -- flightNumber
+    return launches.has(Number(id));
+};
+
+function abortLaunchById(id) {
+    const aborted = launches.get(id);
+    aborted.success = false;
+    aborted.upcoming = false;
+    return aborted;
+};
+
 function getAllLaunches() {
-    return Array.from(launches.values())
+    return Array.from(launches.values());
 }
 
 function addNewLaunch(launch) {
     latestFlightNumber++;
+    launch.flightNumber = latestFlightNumber;
+
+    // console.log('addNewLaunch', launch.flightNumber)
+    // console.log('addNewLaunch', launch)
+
     launches.set(launch.flightNumber, Object.assign(launch, {
         customer: ['Zero to Mastery', 'NASA'],
         flightNumber: latestFlightNumber,
@@ -30,6 +47,8 @@ function addNewLaunch(launch) {
 }
 
 module.exports = {
+    existLaunchWithId,
+    abortLaunchById,
     getAllLaunches,
     addNewLaunch,
 };
