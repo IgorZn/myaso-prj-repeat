@@ -1,6 +1,14 @@
 const request = require('supertest')
 const app = require('../src/app')
 
+const query = {
+            mission: 'ZTM+100500',
+            rocket: 'ZTM Explorer 1',
+            launchDate: new Date('December 27, 2030'),
+            target: 'Kepler-186 f'
+        };
+
+
 describe('Test GET /launches', () => {
 
     test('It should return 200 success', async () => {
@@ -15,13 +23,6 @@ describe('Test GET /launches', () => {
 describe('Test POST /launch', () => {
 
     test('It should respond with 200 success', async () => {
-        const query = {
-            mission: 'ZTM+100500',
-            rocket: 'ZTM Explorer 1',
-            launchDate: new Date('December 27, 2030'),
-            target: 'Kepler-186 f'
-        };
-
         await request(app)
             .post('/launches')
             .send(query)
@@ -34,11 +35,8 @@ describe('Test POST /launch', () => {
     });
 
     test('It should catch missing required properties', async () => {
-        const query = {
-            rocket: 'ZTM Explorer 1',
-            launchDate: new Date('December 27, 2030'),
-            target: 'Kepler-186 f'
-        };
+
+        query.mission = ''
 
         await request(app)
             .post('/launches')
@@ -51,12 +49,8 @@ describe('Test POST /launch', () => {
     });
 
     test('It should catch invalid date', async () => {
-        const query = {
-            mission: 'ZTM+100500',
-            rocket: 'ZTM Explorer 1',
-            launchDate: 'not Date',
-            target: 'Kepler-186 f'
-        };
+
+        query.launchDate = 'not Date'
 
         await request(app)
             .post('/launches')
@@ -66,5 +60,19 @@ describe('Test POST /launch', () => {
             .then((res) => {
                 expect(res.body).toHaveProperty('error', 'Invalid launch date')
             })
-    })
+    });
 });
+
+describe('Test DELETE /launch/:id', () => {
+
+    test('It should DELETE launch', async () => {
+        await request(app)
+            .delete('/launches/100')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then((res) => {
+                expect(res.body).toHaveProperty('upcoming', false)
+                expect(res.body).toHaveProperty('success', false)
+            })
+    })
+})

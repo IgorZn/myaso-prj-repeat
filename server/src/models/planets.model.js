@@ -17,8 +17,8 @@ promise.then((result) => {
 
 const fullPath = path.join('..', 'server','Data', dataFile)
 
-console.log(__dirname)
-console.log(fullPath)
+// console.log(__dirname)
+// console.log(fullPath)
 
 function loadPlanetsData() {
     return new Promise( (resolve, reject) => {

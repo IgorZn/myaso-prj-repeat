@@ -4,6 +4,7 @@
   "description": "Myaso Mission Control API",
   "main": "src/server.js",
   "scripts": {
+    "install-srv": "npm i",
     "set-port": "set PORT=8000",
     "remove-public": "rmdir /S /Q public",
     "watch": "npm run set-port & nodemon src/server.js",

@@ -8,8 +8,8 @@
     "test-srv-watch": "npm run test-watch --prefix server",
     "server-watch-win": "npm run watch-windows --prefix server",
     "client": "npm start --prefix client",
-    "i-server": "npm i --prefix server",
-    "i-client": "npm i --prefix client",
+    "i-server": "npm run install-srv --prefix server",
+    "i-client": "npm run install-cl --prefix client",
     "rm-pub": "rmdir /S /Q .\\server\\public",
     "deploy-win": "npm run rm-pub && npm run build-win --prefix client && npm run start-win --prefix server",
     "install-project": "npm run i-server && npm run i-client"

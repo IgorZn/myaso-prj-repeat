@@ -10,6 +10,7 @@
     "react-scripts": "^4.0.3"
   },
   "scripts": {
+    "install-cl": "npm i",
     "start": "react-scripts start",
     "build-path-nix": "BUILD_PATH=../server/public",
     "build": "react-scripts build",
