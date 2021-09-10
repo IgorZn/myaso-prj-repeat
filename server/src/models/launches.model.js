@@ -51,4 +51,5 @@ module.exports = {
     abortLaunchById,
     getAllLaunches,
     addNewLaunch,
+    launch,
 };

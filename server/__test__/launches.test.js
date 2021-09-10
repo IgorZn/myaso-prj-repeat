@@ -1,5 +1,6 @@
 const request = require('supertest')
 const app = require('../src/app')
+const model = require('../src/models/launches.model')
 
 const query = {
             mission: 'ZTM+100500',
@@ -15,7 +16,11 @@ describe('Test GET /launches', () => {
         await request(app)
             .get('/launches')
             .expect('Content-Type', /json/)
-            .expect(200);
+            .expect(200)
+            .then(res => {
+                model.launch.launchDate = model.launch.launchDate.toISOString();
+                expect(res.body).toStrictEqual([model.launch]);
+            });
     });
 
 });
