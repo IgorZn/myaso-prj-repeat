@@ -1,2 +1,3 @@
 /server/node_modules/*
 /Pipfile.lock
+**/node_modules/*
