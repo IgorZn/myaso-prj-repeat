@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "pm2-start-i-max": "pm2 start server.js -i -1",
+    "pm2-stop-all": "pm2 stop all",
+    "pm2-reload": "pm2 reload server.js",
+    "pm2-restart": "pm2 restart server.js -i -1"
   },
   "keywords": [],
   "author": "",

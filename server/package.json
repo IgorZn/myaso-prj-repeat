@@ -12,7 +12,8 @@
     "test-watch": "jest --watch",
     "watch-windows": "npm run set-port & nodemon src/server.js",
     "start": "PORT=5000 & node src/server.js",
-    "start-win": "npm run set-port && node src/server.js"
+    "start-win": "npm run set-port && node src/server.js",
+    "cluster": "pm2 start src/server.js -i -1"
   },
   "keywords": [],
   "author": "",

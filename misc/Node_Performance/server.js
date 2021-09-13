@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/timer', (req, res) => {
-    delay(9000)
+    delay(4000)
     res.send(`Timer ${process.pid}`)
 })
 
