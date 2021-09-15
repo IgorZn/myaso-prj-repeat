@@ -12,7 +12,7 @@
     "i-client": "npm run install-cl --prefix client",
     "rm-pub": "rmdir /S /Q .\\server\\public",
     "deploy-win": "npm run rm-pub && npm run build-win --prefix client && npm run start-win --prefix server",
-    "deploy-cluster - win": "npm run rm-pub && npm run build-win --prefix client && npm run cluster --prefix server",
+    "deploy-cluster-win": "npm run rm-pub && npm run build-win --prefix client && npm run cluster --prefix server",
     "install-project": "npm run i-server && npm run i-client"
   },
   "repository": {
