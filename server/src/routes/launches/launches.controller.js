@@ -4,10 +4,8 @@ const {
     existLaunchWithId,
     abortLaunchById } = require('../../models/launches.model')
 
-function httpGetAllLaunches(req, res){
-    return res.status(200).json(getAllLaunches().sort((a, b) => {
-        return a.flightNumber - b.flightNumber
-    }))
+async function httpGetAllLaunches(req, res){
+    return res.status(200).json(await getAllLaunches())
 };
 
 function httpAddNewLaunch(req, res) {
