@@ -36,7 +36,7 @@ async function httpAddNewLaunch(req, res) {
     return res.status(201).json(launch)
 };
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
     /*
     Req.params
     Это свойство представляет собой объект, содержащий свойства,
@@ -48,14 +48,22 @@ function httpAbortLaunch(req, res) {
     */
 
     const launchId = Number(req.params.id);
-    if (!existLaunchWithId(launchId)) {
+    const existLaunch = await existLaunchWithId(launchId);
+
+    if (!existLaunch) {
         console.log('Launch not found')
         return res.status(404).json({
             error: 'Launch not found'
         });
     };
 
-    const aborted = abortLaunchById(launchId)
+    const aborted = await abortLaunchById(launchId)
+
+    if (!aborted.acknowledged) {
+        return res.status(400).json({
+            error: 'Launch not found'
+        })
+    }
     return res.status(200).json(aborted)
 };
 
