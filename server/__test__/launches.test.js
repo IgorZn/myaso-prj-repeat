@@ -1,6 +1,7 @@
 const request = require('supertest')
 const app = require('../src/app')
 const model = require('../src/models/launches.model')
+const { mongoConnect, mongoDisconnect } = require('../services/mongo')
 
 const query = {
             mission: 'ZTM+100500',
@@ -9,8 +10,16 @@ const query = {
             target: 'Kepler-186 f'
         };
 
+describe('Launches API', () => {
+    beforeAll( async () => {
+        await mongoConnect();
+    });
 
-describe('Test GET /launches', () => {
+    afterAll(async () => {
+        await mongoDisconnect();
+    })
+
+    describe('Test GET /launches', () => {
 
     test('It should return 200 success', async () => {
         await request(app)
@@ -25,59 +34,63 @@ describe('Test GET /launches', () => {
 
 });
 
-describe('Test POST /launch', () => {
+    describe('Test POST /launch', () => {
 
-    test('It should respond with 200 success', async () => {
-        await request(app)
-            .post('/launches')
-            .send(query)
-            .expect('Content-Type', /json/)
-            .expect(201)
-            .then((res) => {
-                expect(res.body).toHaveProperty('upcoming', true)
-                expect(res.body).toHaveProperty('success', true)
-            })
+        test('It should respond with 200 success', async () => {
+            await request(app)
+                .post('/launches')
+                .send(query)
+                .expect('Content-Type', /json/)
+                .expect(201)
+                .then((res) => {
+                    expect(res.body).toHaveProperty('upcoming', true)
+                    expect(res.body).toHaveProperty('success', true)
+                })
+        });
+
+        test('It should catch missing required properties', async () => {
+
+            query.mission = ''
+
+            await request(app)
+                .post('/launches')
+                .send(query)
+                .expect('Content-Type', /json/)
+                .expect(400)
+                .then((res) => {
+                    expect(res.body).toHaveProperty('error', 'Missing required launch property')
+                })
+        });
+
+        test('It should catch invalid date', async () => {
+
+            query.launchDate = 'not Date'
+
+            await request(app)
+                .post('/launches')
+                .send(query)
+                .expect('Content-Type', /json/)
+                .expect(400)
+                .then((res) => {
+                    expect(res.body).toHaveProperty('error', 'Invalid launch date')
+                })
+        });
     });
 
-    test('It should catch missing required properties', async () => {
+    describe('Test DELETE /launch/:id', () => {
 
-        query.mission = ''
-
-        await request(app)
-            .post('/launches')
-            .send(query)
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .then((res) => {
-                expect(res.body).toHaveProperty('error', 'Missing required launch property')
-            })
+        test('It should DELETE launch', async () => {
+            await request(app)
+                .delete('/launches/100')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .then((res) => {
+                    expect(res.body).toHaveProperty('acknowledged', true)
+                    expect(res.body).toHaveProperty('modifiedCount', 1)
+                    expect(res.body).toHaveProperty('matchedCount', 1)
+                })
+        })
     });
 
-    test('It should catch invalid date', async () => {
-
-        query.launchDate = 'not Date'
-
-        await request(app)
-            .post('/launches')
-            .send(query)
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .then((res) => {
-                expect(res.body).toHaveProperty('error', 'Invalid launch date')
-            })
-    });
 });
 
-describe('Test DELETE /launch/:id', () => {
-
-    test('It should DELETE launch', async () => {
-        await request(app)
-            .delete('/launches/100')
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .then((res) => {
-                expect(res.body).toHaveProperty('upcoming', false)
-                expect(res.body).toHaveProperty('success', false)
-            })
-    })
-})

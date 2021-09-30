@@ -16,6 +16,9 @@
     "cluster": "pm2 start src/server.js -i -1"
   },
   "keywords": [],
+  "jest": {
+    "testEnvironment": "node"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

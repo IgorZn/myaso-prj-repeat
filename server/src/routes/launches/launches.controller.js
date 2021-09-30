@@ -27,6 +27,13 @@ async function httpAddNewLaunch(req, res) {
         launch.target].every(elem => elem);
 
     if (!required) {
+        required = [
+            launch.mission,
+            launch.rocket,
+            launch.launchDate,
+            launch.target
+        ]
+        console.log('Debugging required -->', required)
         return res.status(400).json({
             error: 'Missing required launch property'
         })
