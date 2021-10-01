@@ -7,7 +7,7 @@ const query = {
             mission: 'ZTM+100500',
             rocket: 'ZTM Explorer 1',
             launchDate: new Date('December 27, 2030'),
-            target: 'Kepler-186 f'
+            target: 'Kepler-1410 b'
         };
 
 describe('Launches API', () => {
@@ -28,7 +28,7 @@ describe('Launches API', () => {
             .expect(200)
             .then(res => {
                 model.launch.launchDate = model.launch.launchDate.toISOString();
-                expect(res.body).toStrictEqual([model.launch]);
+                expect(res.body).toHaveProperty([model.launch]);
             });
     });
 

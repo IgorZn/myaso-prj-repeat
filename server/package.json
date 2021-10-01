@@ -8,7 +8,7 @@
     "set-port": "set PORT=8000",
     "remove-public": "rmdir /S /Q public",
     "watch": "npm run set-port & nodemon src/server.js",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --unhandled-rejections=strict",
     "test-watch": "jest --watch",
     "watch-windows": "npm run set-port & nodemon src/server.js",
     "start": "PORT=5000 & node src/server.js",

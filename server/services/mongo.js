@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const MONGO_URL = 'mongodb+srv://myaso_prj:QhdiCOhl6tFVHmBW@cluster0.xm9bg.mongodb.net/myaso_db?retryWrites=true&w=majority'
+const MONGO_URL = 'mongodb+srv://myaso_prj:QhdiCOhl6tFVHmBW@cluster0.xm9bg.mongodb.net/myaso_db?retryWrites=true&w=majority';
 
 mongoose.connection.once('open', () => {
     console.log('MongoDB connection is ready...')
@@ -19,7 +19,7 @@ async function mongoConnect() {
 };
 
 async function mongoDisconnect() {
-    await mongoose.disconnect()
+    await mongoose.disconnect();
 };
 
 module.exports = {
