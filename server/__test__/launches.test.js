@@ -9,6 +9,7 @@ const query = {
             launchDate: new Date('December 27, 2030'),
             target: 'Kepler-1410 b'
         };
+const API_VER = '/v1'
 
 describe('Launches API', () => {
     beforeAll( async () => {
@@ -23,7 +24,7 @@ describe('Launches API', () => {
 
     test('It should return 200 success', async () => {
         await request(app)
-            .get('/launches')
+            .get(`${API_VER}/launches`)
             .expect('Content-Type', /json/)
             .expect(200)
             .then(res => {
@@ -38,7 +39,7 @@ describe('Launches API', () => {
 
         test('It should respond with 200 success', async () => {
             await request(app)
-                .post('/launches')
+                .post(`${API_VER}/launches`)
                 .send(query)
                 .expect('Content-Type', /json/)
                 .expect(201)
@@ -53,7 +54,7 @@ describe('Launches API', () => {
             query.mission = ''
 
             await request(app)
-                .post('/launches')
+                .post(`${API_VER}/launches`)
                 .send(query)
                 .expect('Content-Type', /json/)
                 .expect(400)
@@ -67,7 +68,7 @@ describe('Launches API', () => {
             query.launchDate = 'not Date'
 
             await request(app)
-                .post('/launches')
+                .post(`${API_VER}/launches`)
                 .send(query)
                 .expect('Content-Type', /json/)
                 .expect(400)
@@ -81,7 +82,7 @@ describe('Launches API', () => {
 
         test('It should DELETE launch', async () => {
             await request(app)
-                .delete('/launches/100')
+                .delete(`${API_VER}/launches/100`)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .then((res) => {

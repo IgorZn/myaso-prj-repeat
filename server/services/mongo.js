@@ -16,11 +16,11 @@ async function mongoConnect() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-};
+}
 
 async function mongoDisconnect() {
     await mongoose.disconnect();
-};
+}
 
 module.exports = {
     mongoConnect,

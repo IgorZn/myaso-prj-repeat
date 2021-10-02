@@ -1,7 +1,8 @@
 const PROTOCOL = 'http://'
 const URL = 'localhost'
 const PORT = ':8000'
-const BASE_URL = PROTOCOL + URL + PORT
+const API_VER = '/v1'
+const BASE_URL = PROTOCOL + URL + PORT + API_VER
 
 async function httpGetPlanets() {
   const response = await fetch(`${BASE_URL}/planets`)
