@@ -95,7 +95,7 @@ async function scheduleNewLaunch(launch) {
 };
 
 async function loadLaunchesData() {
-    console.log('Downloading lauch data...')
+    console.log('Downloading launch data...')
     const response = await axios.post(SPACEX_API_URL, {
       'options': {
         'populate': [
@@ -104,10 +104,41 @@ async function loadLaunchesData() {
             'select': {
               'name': 1
             }
+          },
+            {
+            "path": "payloads",
+            "select": {
+              "customers": 1
+            }
           }
         ]
       }
     });
+
+    const launchDocs = response.data.docs;
+    launchDocs.forEach( doc => {
+        /*
+        *  Make a flat arr from nested arrs
+        * */
+        const payloads = doc['payloads'];
+        const customers = payloads.flatMap( payload => {
+            return payload['customers']
+        });
+
+        const launch = {
+            flightNumber: doc['flight_number'],
+            mission: doc['name'], // name
+            rocket: doc['rocket']['name'], // rocket.name
+            launchDate: doc['date_local'], // date_local
+            // target: 'Kepler-442 b', // not applicable
+            customers, // payloads.customers
+            upcoming: doc['upcoming'], // upcoming
+            success: doc['success'], // success
+        }
+
+        console.log(launch.flightNumber, launch.mission, launch.customers)
+    });
+
 };
 
 module.exports = {
