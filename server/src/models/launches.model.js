@@ -40,7 +40,8 @@ async function getAllLaunches() {
     return launchesDB.find({}, {
         '_id': 0,
         '__v': 0,
-    });
+    })
+        .sort('flightNumber');
 };
 
 async function getLatestFlightNumber() {
@@ -57,32 +58,31 @@ async function getLatestFlightNumber() {
 
 async function saveLaunch(launch) {
     // Validation target planet
-    console.log(
-        launch.target
-    );
+    const planet = planets.findOne({
+        keplerName: launch.target,
+    });
+    planet.then( async result => {
+        console.log('launch.target -->', launch.target);
+        await launchesDB.updateOne({
+            flightNumber: launch.flightNumber,
+        }, launch , {
+            upsert: true
+        });
 
+    });
+};
+
+async function scheduleNewLaunch(launch) {
     const planet = planets.findOne({
         keplerName: launch.target,
     });
 
-    planet.then( async res => {
-        if (!res) {
-            throw new Error('No such planet in target list')
-        } else {
-            await launchesDB.updateOne({
-                flightNumber: launch.flightNumber,
-            }, launch , {
-                upsert: true
-            });
-        };
-
+    planet.then( async result => {
+        if (!result) {
+            console.log('No such planet in target list')
+        }
     });
 
-
-
-};
-
-async function scheduleNewLaunch(launch) {
     const newFlightNumber = await getLatestFlightNumber() + 1;
     const newLaunch = Object.assign(launch, {
         customer: ['Zero to Mastery', 'NASA'],
@@ -116,31 +116,34 @@ async function populateLaunches() {
       }
     });
 
+    if (response.status !== 200) {
+        console.error('Problem downloading launch data...')
+    }
     const launchDocs = response.data.docs;
-    launchDocs.forEach( doc => {
-        /*
-        *  Make a flat arr from nested arrs
-        * */
-        const payloads = doc['payloads'];
+    /*
+    *  Make a flat arr from nested arrs
+    * */
+
+    launchDocs.map( async function (launchDoc) {
+        const payloads = launchDoc['payloads'];
         const customers = payloads.flatMap( payload => {
             return payload['customers']
         });
 
         const launch = {
-            flightNumber: doc['flight_number'],
-            mission: doc['name'], // name
-            rocket: doc['rocket']['name'], // rocket.name
-            launchDate: doc['date_local'], // date_local
+            flightNumber: launchDoc['flight_number'],
+            mission: launchDoc['name'], // name
+            rocket: launchDoc['rocket']['name'], // rocket.name
+            launchDate: launchDoc['date_local'], // date_local
             // target: 'Kepler-442 b', // not applicable
+            upcoming: launchDoc['upcoming'], // upcoming
+            success: launchDoc['success'], // success
             customers, // payloads.customers
-            upcoming: doc['upcoming'], // upcoming
-            success: doc['success'], // success
         }
 
         console.log(launch.flightNumber, launch.mission, launch.customers)
-
-    //    TODO: populate launches collection...
-    });
+        await saveLaunch(launch)
+    })
 }
 
 async function loadLaunchesData() {
@@ -150,15 +153,21 @@ async function loadLaunchesData() {
         mission: 'FalconSat',
     })
 
-    if (first) {
-        console.log('Launch data already loaded...');
-    } else {
-        await populateLaunches();
-    }
+    first.then( async result => {
+        if (result) {
+            console.log('first -> result', result)
+            console.log('Launch data already loaded...');
+        } else {
+            await populateLaunches();
+        }
+    })
+
+
+
 };
 
 async function findLaunch(filter) {
-    return await launchesDB.findOne(filter);
+    return launchesDB.findOne(filter);
 };
 
 module.exports = {
