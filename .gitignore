@@ -2,4 +2,4 @@
 /Pipfile.lock
 **/node_modules/*
 **/public/**
-.env*
+/server/.env**
