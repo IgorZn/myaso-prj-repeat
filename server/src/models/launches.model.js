@@ -36,12 +36,14 @@ async function abortLaunchById(id) {
     });
 };
 
-async function getAllLaunches() {
+async function getAllLaunches(skip, limit) {
     return launchesDB.find({}, {
         '_id': 0,
         '__v': 0,
     })
-        .sort('flightNumber');
+        .sort('flightNumber')
+        .skip(skip)
+        .limit(limit);
 };
 
 async function getLatestFlightNumber() {
