@@ -1,10 +1,14 @@
 const fs = require('fs')
 const https = require('https');
 const path = require("path");
+const helmet = require('helmet');
 const express = require('express');
 
 const INDEX = path.join(__dirname, 'public', 'index.html');
 const app = express();
+
+// SECURITY
+app.use(helmet());
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'localhost';

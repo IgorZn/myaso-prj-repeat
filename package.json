@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/IgorZn/myaso-prj-repeat/issues"
   },
-  "homepage": "https://github.com/IgorZn/myaso-prj-repeat#readme"
+  "homepage": "https://github.com/IgorZn/myaso-prj-repeat#readme",
+  "dependencies": {
+    "helmet": "^4.6.0"
+  }
 }
